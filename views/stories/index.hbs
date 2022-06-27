@@ -5,13 +5,15 @@
         <div class="card">
             <div class="card-image">
                 {{!-- icon --}}
+                {{{editIcon user ../user _id}}}
             </div>
             <div class="card-content center-align">
                 <h5>{{title}}</h5>
                 <p>{{stripTags (truncate body 150)}}</p>
                 <br>
                 <div class="chip">
-                    <img src="{{user.image}}" alt="">
+                    {{!-- <img src="{{user.image}}" alt=""> --}}
+                    <img src="{{{user.image}}}" alt="">
                     <a href="/stories/user/{{user._id}}">{{user.displayName}}</a>
                 </div>
             </div>

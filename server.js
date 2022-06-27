@@ -33,10 +33,10 @@ if(process.env.NODE_ENV === "development"){
 };
 
 // helpers handleBars
-import { formatDate, stripTags, truncate } from "./helpers/hbs.js";
+import { formatDate, stripTags, truncate, editIcon } from "./helpers/hbs.js";
 
 // handleBars
-app.engine(".hbs", engine({helpers: {formatDate, stripTags, truncate}, defaultLayout:"main", extname: ".hbs"}));
+app.engine(".hbs", engine({helpers: {formatDate, stripTags, truncate, editIcon}, defaultLayout:"main", extname: ".hbs"}));
 app.set("view engine", ".hbs");
 
 // Sessions
@@ -55,6 +55,12 @@ app.use(session({
 // passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
+
+// set global var
+app.use(function(req, res, next){
+    res.locals.user = req.user || null;
+    next();
+});
 
 // Static
 app.use(express.static("public"));

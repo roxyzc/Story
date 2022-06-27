@@ -42,5 +42,25 @@ storiesRouter.get("/", ensureAuth, async(req, res) =>{
     }
 });
 
+// @desc    Show edit page
+// @route   get/stories/edit/:id
+storiesRouter.get("/edit/:id", ensureAuth, async(req, res) =>{
+    try {
+        const story = await Story.findById(req.params.id).lean();
+        if(!story){
+            return res.render("error/404");
+        }
+        if(story.user != req.user.id){
+            res.redirect("/stories")
+        }else{
+            res.render("stories/edit", {
+                story,
+            });
+        };
+    } catch (error) {
+        console.log(error);
+        res.render("error/500");
+    }
+});
 
 export default storiesRouter;
